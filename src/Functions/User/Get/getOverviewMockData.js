@@ -3,6 +3,7 @@ const OVERVIEW_MOCK_DATA = {
         {
             color: '#1c81c2',
             id: 123,
+            image: 'https://i.ibb.co/2gsZYDg/meta-logo.png',
             name: 'Meta',
             nickname: "Bui's Cupcake Shop",
             scoreContribution: {
@@ -26,11 +27,12 @@ const OVERVIEW_MOCK_DATA = {
         {
             color: '#333',
             id: 345,
+            image: 'https://i.ibb.co/kc5X5xt/tiktok-logo.png',
             name: 'TikTok',
             nickname: "Bui's Computer Parts",
             scoreContribution: {
                 delta: -0.0122,
-                total: 0.1,
+                total: 0.25,
             },
             stats: {
                 ctr: {
@@ -49,6 +51,7 @@ const OVERVIEW_MOCK_DATA = {
         {
             color: '#ff9900',
             id: 489,
+            image: 'https://i.ibb.co/4tMNsRB/google-logo.png',
             name: 'Google',
             nickname: "Ramzi's Pharmacy",
             scoreContribution: {
