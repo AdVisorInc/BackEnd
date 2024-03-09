@@ -13,4 +13,5 @@ const initParse = () => {
 
 export { initParse };
 
+export * from './Board';
 export * from './Sessions';

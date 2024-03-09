@@ -2,7 +2,7 @@ import app from './server';
 
 import { createServer } from 'http';
 import { Server } from 'socket.io';
-import { cleanupUserFunc, identifyUserFunc } from './Functions';
+import { cleanupUserFunc, identifyUserFunc, submitRowFunc } from './Functions';
 
 const server = createServer(app);
 const io = new Server(server, {
@@ -13,8 +13,6 @@ const io = new Server(server, {
 
 const port = process.env.PORT || 5005;
 
-let currentConnections = 0;
-
 app.listen(port, () => {
     /* eslint-disable no-console */
     console.log(`Listening: http://localhost:${port}`);
@@ -22,8 +20,6 @@ app.listen(port, () => {
 
 io.on('connection', socket => {
     console.log('a user connected');
-
-    currentConnections += 1;
 
     identifyUserFunc()
         .then(result => {
@@ -53,10 +49,19 @@ io.on('connection', socket => {
             });
     });
 
-    socket.on('submittedGuess', msg => {
-        console.log('guess: ' + msg);
-
-        socket.emit('foo', 'good job: ' + currentConnections);
+    socket.on('submittedGuess', submittedGuess => {
+        console.log('user submitted: ' + submittedGuess);
+        submitRowFunc(submittedGuess)
+            .then(result => {
+                console.log(
+                    'handled board update: ' + JSON.stringify(submittedGuess),
+                );
+                socket.emit('boardUpdate', result);
+            })
+            .catch(error => {
+                console.log('error: ' + error);
+                socket.emit('printError', JSON.stringify(error));
+            });
     });
 });
 

@@ -28,6 +28,17 @@ const HTTP_ERROR_MESSAGES = {
         parse: {
             board: {
                 internal01: 'An internal error has occured (PARSE.BOARD 01).',
+                patch: {
+                    invalidRowNumber: givenRowNumber => {
+                        return `The index "${givenRowNumber}" for a row is out of bounds (0 <= x <= 5).`;
+                    },
+                    invalidRowValue: givenRowValue => {
+                        return `The value "${givenRowValue}" is not in the proper format for a row (Default = ["", "", "", "", ""]).`;
+                    },
+                    notFound: givenBoardId => {
+                        return `A board with the id "${givenBoardId}" was not found.`;
+                    },
+                },
             },
             sessions: {
                 internal01:
@@ -35,8 +46,7 @@ const HTTP_ERROR_MESSAGES = {
                 patch: {
                     missingParms:
                         'updateSession requires a parameter to update, none were provided',
-                    missingPK:
-                        'updateSession requires a parameter to update, none were provided',
+                    missingPK: 'A session for the given id was not found.',
                 },
             },
         },
