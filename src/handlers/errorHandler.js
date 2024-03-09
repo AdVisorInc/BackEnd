@@ -24,7 +24,28 @@ const HTTP_ERROR_MESSAGES = {
     accessTokenInvalid: 'Access token is invalid.',
     accessTokenUndefined: 'Missing access token.',
     missingParms: '1 or more parms are missing.',
+    services: {
+        parse: {
+            board: {
+                internal01: 'An internal error has occured (PARSE.BOARD 01).',
+            },
+            sessions: {
+                internal01:
+                    'An internal error has occured (PARSE.SESSIONS 01).',
+                patch: {
+                    missingParms:
+                        'updateSession requires a parameter to update, none were provided',
+                    missingPK:
+                        'updateSession requires a parameter to update, none were provided',
+                },
+            },
+        },
+    },
     unknown: 'Request could not be completed. Please try again.',
+    websocket: {
+        sessionAlreadyActive:
+            'There is already an active session. This error was thrown because there already an active player or the previous game was not properly cleaned up.',
+    },
 };
 
 function CustomHttpError(errorCode, message) {

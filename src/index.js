@@ -2,11 +2,12 @@ import app from './server';
 
 import { createServer } from 'http';
 import { Server } from 'socket.io';
+import { cleanupUserFunc, identifyUserFunc } from './Functions';
 
 const server = createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: 'http://localhost:57874',
+        origin: 'http://localhost:3001',
     },
 });
 
@@ -24,24 +25,32 @@ io.on('connection', socket => {
 
     currentConnections += 1;
 
-    socket.emit('identification', currentConnections);
-
-    if (currentConnections > 1) {
-        socket.local.emit('gameState', 'ready');
-        socket.emit('gameState', 'ready');
-    } else {
-        socket.local.emit('gameState', 'lobby');
-        socket.emit('gameState', 'lobby');
-    }
+    identifyUserFunc()
+        .then(result => {
+            console.log(
+                'finished identify user func: ' + JSON.stringify(result),
+            );
+            socket.emit('identification', result);
+        })
+        .catch(error => {
+            socket.emit('printError', JSON.stringify(error));
+        });
 
     socket.on('disconnect', () => {
-        currentConnections -= 1;
         console.log('user disconnected');
 
-        if (currentConnections < 2) {
-            socket.local.emit('gameState', 'lobby');
-            socket.emit('gameState', 'lobby');
-        }
+        cleanupUserFunc()
+            .then(result => {
+                console.log(
+                    'finished cleanup user func: ' + JSON.stringify(result),
+                );
+            })
+            .catch(error => {
+                console.log(
+                    'There was an error on user cleanup: ' +
+                        JSON.stringify(error),
+                );
+            });
     });
 
     socket.on('submittedGuess', msg => {

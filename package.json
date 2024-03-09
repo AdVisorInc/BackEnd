@@ -4,7 +4,7 @@
     "scripts": {
         "lint": "eslint .",
         "prettier": "prettier --loglevel=error --write --ignore-path=.eslintignore \"./**/*.js\"",
-        "serve": "nodemon --exec babel-node src/index.js"
+        "serve": "nodemon -r dotenv/config --exec babel-node src/index.js dotenv_config_path=.config/prod.env dotenv_config_debug=true"
     },
     "engines": {
         "node": "16"
@@ -14,6 +14,7 @@
         "@babel/node": "^7.23.9",
         "cors": "^2.8.5",
         "cross-fetch": "^3.1.5",
+        "dotenv": "^16.4.5",
         "express": "^4.17.1",
         "fluent-ffmpeg": "^2.1.2",
         "http": "^0.0.1-security",

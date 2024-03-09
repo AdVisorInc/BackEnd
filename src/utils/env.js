@@ -1,33 +1,9 @@
-import { config } from 'firebase-functions';
+import 'dotenv/config';
 
-const getFirebaseConfig = () => {
-    const {
-        api_key,
-        app_id,
-        auth_domain,
-        database_url,
-        measurement_id,
-        messaging_sender_id,
-        project_id,
-        storage_bucket,
-    } = config().env.service_account;
+const getBack4AppKeys = () => {
+    const { BACK_4_APP_APP_ID, BACK_4_APP_SECRET_KEY } = process.env;
 
-    return {
-        apiKey: api_key,
-        appId: app_id,
-        authDomain: auth_domain,
-        measurementId: measurement_id,
-        messagingSenderId: messaging_sender_id,
-        projectId: project_id,
-        storageBucket: storage_bucket,
-        ...(database_url ? { databaseURL: database_url } : {}),
-    };
+    return { BACK_4_APP_APP_ID, BACK_4_APP_SECRET_KEY };
 };
 
-const getServiceAPISecrets = () => {
-    const { service_apis } = config().env;
-
-    return service_apis;
-};
-
-export { getFirebaseConfig, getServiceAPISecrets };
+export { getBack4AppKeys };
