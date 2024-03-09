@@ -11,9 +11,7 @@ export const updateBoard = async (
     rowValue,
     currentGuess,
 ) => {
-    const boardQueryObj = boardQuery();
-
-    const boardObject = await boardQueryObj.first(boardId);
+    const boardObject = await boardQuery().get(boardId);
 
     if (!boardObject) {
         throw createError(
