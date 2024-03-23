@@ -3,8 +3,8 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { GoogleAdsApi, enums } from 'google-ads-api';
 
-const clientId = '22202495353-8lrc4moj4phsgos8smqm8gg20h7fqtq4.apps.googleusercontent.com';
-const clientSecret = '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';
+const clientId = '645397317989-ffbu72jpm7grh5alrklke7bttuhca6jr.apps.googleusercontent.com';
+const clientSecret = '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';
 const developerToken = 'OQHHyk3cC96E0koIbHbCxA';
 
 const googleAdsApi = new GoogleAdsApi({
@@ -22,6 +22,7 @@ export async function importCampaigns(request: FastifyRequest, reply: FastifyRep
     }
 
     const customers = await googleAdsApi.listAccessibleCustomers(refreshToken);
+    console.log(customers)
 
     // Assuming the user has only one accessible customer, we'll use the first one
     const customerResourceName = customers.resource_names[0];
@@ -29,9 +30,10 @@ export async function importCampaigns(request: FastifyRequest, reply: FastifyRep
 
     const customer = googleAdsApi.Customer({
       customer_id: customerId,
+      login_customer_id: customerId,
       refresh_token: refreshToken,
     });
-
+    console.log(customer)
     const campaigns = await customer.report({
       entity: 'campaign',
       attributes: [

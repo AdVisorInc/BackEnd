@@ -5,7 +5,7 @@ export const importCampaignsSchema = {
   description: 'Import Google Ads campaigns',
   body: {
     type: 'object',
-    required: ['accessToken', 'refreshToken'],
+    required: ['refreshToken'],
     properties: {
       refreshToken: { type: 'string' },
     },
