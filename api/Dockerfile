@@ -44,6 +44,7 @@ COPY pm2.config.json ./
 RUN npm install --production --no-audit --no-save --no-optional --no-fund --no-package-locknpm install
 
 COPY --from=build /app/dist/src .
+COPY --from=build /app/node_modules /app/node_modules
 
 COPY --from=build /app/node_modules/.prisma ./node_modules/.prisma
 
