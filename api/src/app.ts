@@ -40,6 +40,11 @@ const main = async () => {
     await app.register(fastifySwaggerUi, {
       routePrefix: '/docs',
     });
+
+    // Redirect from root to Swagger documentation
+    app.get('/', async (request, reply) => {
+      reply.redirect('/docs');
+    });
   }
 
   // API Endpoint routes
